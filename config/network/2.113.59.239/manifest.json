@@ -6,6 +6,6 @@
     "defaultUser": {
         "userId": "user",
         "password": "",
-        "userName": "privateConnection"
+        "userName": "anon"
     }
 }
