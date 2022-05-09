@@ -1,0 +1,11 @@
+{
+    "serverAddress": "2.113.59.239",
+    "serverName": "The Donbaugher Group",
+    "iconName": "delta.png",
+    "terminalID": "DG",
+    "defaultUser": {
+        "userId": "user",
+        "password": "",
+        "userName": "privateConnection"
+    }
+}
