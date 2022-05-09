@@ -9,36 +9,35 @@
  */
 /* eslint-disable no-inner-declarations, no-nested-ternary, no-sequences, no-unused-vars */
 
-// function decrypt( args ) { // The same function can be used to encode text
-//     if ( args.length === 0 ) {
-//         return "<p>Some encrypted text must be provided: <code>decrypt 53CR3T T3XT</code></p>";
-//     }
-//     const textInClear = rot13( args.join( " " ) );
-//     return `<p class="hack-reveal">${ textInClear }</p>`;
-// }
+function decrypt( args ) { // The same function can be used to encode text
+    if ( args.length === 0 ) {
+        return "<p>Some encrypted text must be provided: <code>decrypt 53CR3T T3XT</code></p>";
+    }
+    const textInClear = rot13( args.join( " " ) );
+    return `<p class="hack-reveal">${ textInClear }</p>`;
+}
 // function rot13( s ) {
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
-    const aen = /a.*-re/
-    const ade = /a.*-re/
-    if( args.length === 0 && ! aen.test(args) && ! ade.test(args)){
-        return "<p> Provide Encryption Mode: <code>AUTO-EN</code> <code>AUTO-DE</code>"
+    const decrypt = /[Dd].{5}[Tt]/;
+    const encrypt = /[Ee].{5}[Tt]/;
+    const key = /(?<=[kK][eE][yY]: ).*(?= [tT][eE][xX][tT]: )|(?<=[kK][eE][yY]: ).*(?! [tT][eE][xX][tT]: )/
+    const msg = /(?<=[tT][eE][xX][tT]: ).*(?= [kK][eE][yY]: )|(?<=[tT][eE][xX][tT]: ).*(?! [kK][eE][yY]: )/
+    if(args.len === 0 || key.test(args) === false || msg.test(args) === false){
+        return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
     }
-    else if( aen.test(args)){
-        const message = window.prompt("Plaintext Message: ");
-        const keyPrimer = window.prompt("Key Phrase: ");
-        const encryptedText = autokey(message,keyPrimer);
-        return '<p class="hack-reveal">${encryptedText}</p>'
+    else if( encrypt.test(args)){
+        const plainText = args.match(msg);
+        const keyPhrase = args.match(key);
+        const encryptedText = autokey(plainText[0], keyPhrase[0]);
+        return `<p class="hack-reveal">${ encryptedText }</p>`;
     }
-    else if( ade.test(args)){
-        const message = window.prompt("Encrypted Text: ");
-        const keyPrimer = window.prompt("Key Phrase");
-        const decryptedText =  autodekey(message,keyPrimer);
-        return '<p class="hack-reveal">${decryptedText}</p>'
-    }
-    else{
-        return '<p>Invalid Configuration.</p>'
+    else if( decrypt.test( args)){
+        const plainText = args.match(msg);
+        const keyPhrase = args.match(key);
+        const decryptedText = autodekey(plainText[0], keyPhrase[0]);
+        return `<p class="hack-reveal">${ decryptedText }</p>`;
     }
 };
 function emod(n, m){
@@ -70,5 +69,3 @@ function autodekey(msg,key){
     }
     return out;
 };
-
-var test = cryptid('TRHET')
