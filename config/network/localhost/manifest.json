@@ -1,7 +1,7 @@
 {
     "serverAddress": "localhost",
-    "serverName": "Node Y56 Intranet",
-    "iconName": "Moon-icon.png",
+    "serverName": "DELTA GREEN TEST SERVER",
+    "iconName": "delta.png",
     "terminalID": "Y56",
     "defaultUser": {
         "userId": "user",
