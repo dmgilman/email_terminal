@@ -21,7 +21,7 @@ function decrypt( args ) { // The same function can be used to encode text
 // }
 function cryptid( args){
     var argText = args.join(' ');
-    const decrypt = /[Dd].{5}[Tt]/;
+    const decrypt = /(decrypt|[Dd][Ee][Cc][Rr][Yy][Pp][Tt])/;
     const encrypt = /[Ee].{5}[Tt]/;
     const key = /(?<=[kK][eE][yY]: ).*(?= [tT][eE][xX][tT]: )|(?<=[kK][eE][yY]: ).*(?! [tT][eE][xX][tT]: )/
     const msg = /(?<=[tT][eE][xX][tT]: ).*(?= [kK][eE][yY]: )|(?<=[tT][eE][xX][tT]: ).*(?! [kK][eE][yY]: )/
