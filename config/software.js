@@ -20,11 +20,13 @@ function decrypt( args ) { // The same function can be used to encode text
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
-    const argText = args.join(' ');
+    var argText = args.join(' ');
     const decrypt = /[Dd].{5}[Tt]/;
     const encrypt = /[Ee].{5}[Tt]/;
     const key = /(?<=[kK][eE][yY]: ).*(?= [tT][eE][xX][tT]: )|(?<=[kK][eE][yY]: ).*(?! [tT][eE][xX][tT]: )/
     const msg = /(?<=[tT][eE][xX][tT]: ).*(?= [kK][eE][yY]: )|(?<=[tT][eE][xX][tT]: ).*(?! [kK][eE][yY]: )/
+    const sani = /(?=['"<>/\\])/
+    argText.replace(sani,'\\')
     if(argText.len === 0 || key.test(argText) === false || msg.test(argText) === false){
         return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
     }
