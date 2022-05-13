@@ -21,22 +21,22 @@ function decrypt( args ) { // The same function can be used to encode text
 // }
 function cryptid( args){
     var argText = args.join(' ');
-    const decrypt = /(decrypt|[Dd][Ee][Cc][Rr][Yy][Pp][Tt])/;
-    const encrypt = /[Ee].{5}[Tt]/;
-    const key = /(?<=[kK][eE][yY]: ).*(?= [tT][eE][xX][tT]: )|(?<=[kK][eE][yY]: ).*(?! [tT][eE][xX][tT]: )/
-    const msg = /(?<=[tT][eE][xX][tT]: ).*(?= [kK][eE][yY]: )|(?<=[tT][eE][xX][tT]: ).*(?! [kK][eE][yY]: )/
-    const sani = /(?=['"<>/\\])/
+    const enc = /d.*{5}t/gmi;
+    const dec = /e.*{5}t/gmi;
+    const key = /(?<=key: ).*(?= text: )|(?<=key: ).*(?! text: )/gmi;
+    const msg = /(?<=text: ).*(?= key: )|(?<=text: ).*(?! key: )/gmi;
+    const sani = /(?=['"<>/\\])/gm;
     argText.replace(sani,'\\')
     if(argText.len === 0 || key.test(argText) === false || msg.test(argText) === false){
         return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
     }
-    else if( encrypt.test(argText)){
+    else if( enc.test(argText)){
         const plainText = argText.match(msg);
         const keyPhrase = argText.match(key);
         const encryptedText = autokey(plainText[0], keyPhrase[0]);
         return `<p class="hack-reveal">${ encryptedText }</p>`;
     }
-    else if( decrypt.test( argText)){
+    else if( dec.test( argText)){
         const plainText = argText.match(msg);
         const keyPhrase = argText.match(key);
         const decryptedText = autodekey(plainText[0], keyPhrase[0]);
