@@ -70,5 +70,5 @@ function autodekey(msg,key){
     return out;
 };
 function oracle( args){
-    return args
+    return args[0] + "and" + args[1]
 }
