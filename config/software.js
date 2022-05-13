@@ -20,22 +20,23 @@ function decrypt( args ) { // The same function can be used to encode text
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
+    const argText = args.join(' ');
     const decrypt = /[Dd].{5}[Tt]/;
     const encrypt = /[Ee].{5}[Tt]/;
     const key = /(?<=[kK][eE][yY]: ).*(?= [tT][eE][xX][tT]: )|(?<=[kK][eE][yY]: ).*(?! [tT][eE][xX][tT]: )/
     const msg = /(?<=[tT][eE][xX][tT]: ).*(?= [kK][eE][yY]: )|(?<=[tT][eE][xX][tT]: ).*(?! [kK][eE][yY]: )/
-    if(args.len === 0 || key.test(args) === false || msg.test(args) === false){
+    if(argText.len === 0 || key.test(argText) === false || msg.test(argText) === false){
         return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
     }
-    else if( encrypt.test(args)){
-        const plainText = args.match(msg);
-        const keyPhrase = args.match(key);
+    else if( encrypt.test(argText)){
+        const plainText = argText.match(msg);
+        const keyPhrase = argText.match(key);
         const encryptedText = autokey(plainText[0], keyPhrase[0]);
         return `<p class="hack-reveal">${ encryptedText }</p>`;
     }
-    else if( decrypt.test( args)){
-        const plainText = args.match(msg);
-        const keyPhrase = args.match(key);
+    else if( decrypt.test( argText)){
+        const plainText = argText.match(msg);
+        const keyPhrase = argText.match(key);
         const decryptedText = autodekey(plainText[0], keyPhrase[0]);
         return `<p class="hack-reveal">${ decryptedText }</p>`;
     }
