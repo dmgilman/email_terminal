@@ -69,3 +69,6 @@ function autodekey(msg,key){
     }
     return out;
 };
+function oracle( args){
+    return args
+}
