@@ -21,8 +21,8 @@ function decrypt( args ) { // The same function can be used to encode text
 // }
 function cryptid( args){
     var argText = args.join(' ');
-    const enc = /d.*{5}t/gmi;
-    const dec = /e.*{5}t/gmi;
+    const encryptid = /decrypt/gmi;
+    const decryptid = /encrypt/gmi;
     const key = /(?<=key: ).*(?= text: )|(?<=key: ).*(?! text: )/gmi;
     const msg = /(?<=text: ).*(?= key: )|(?<=text: ).*(?! key: )/gmi;
     const sani = /(?=['"<>/\\])/gm;
@@ -30,13 +30,13 @@ function cryptid( args){
     if(argText.len === 0 || key.test(argText) === false || msg.test(argText) === false){
         return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
     }
-    else if( enc.test(argText)){
+    else if( encryptid.test(argText)){
         const plainText = argText.match(msg);
         const keyPhrase = argText.match(key);
         const encryptedText = autokey(plainText[0], keyPhrase[0]);
         return `<p class="hack-reveal">${ encryptedText }</p>`;
     }
-    else if( dec.test( argText)){
+    else if( decryptid.test( argText)){
         const plainText = argText.match(msg);
         const keyPhrase = argText.match(key);
         const decryptedText = autodekey(plainText[0], keyPhrase[0]);
