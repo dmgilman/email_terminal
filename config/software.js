@@ -20,28 +20,23 @@ function decrypt( args ) { // The same function can be used to encode text
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
-    var argText = args.join(' ');
-    const encryptid = /decrypt/gmi;
-    const decryptid = /encrypt/gmi;
-    const key = /(?<=key: ).*(?= text: )|(?<=key: ).*(?! text: )/gmi;
-    const msg = /(?<=text: ).*(?= key: )|(?<=text: ).*(?! key: )/gmi;
-    const sani = /(?=['"<>/\\])/gm;
-    argText.replace(sani,'\\')
-    if(argText.len === 0 || key.test(argText) === false || msg.test(argText) === false){
-        return '<p>Usage Notes: <code> \<[decrypt]/[encrypt]\> \<key: [key phrase \<text: [message]\></code><\p>'
-    }
-    else if( encryptid.test(argText)){
-        const plainText = argText.match(msg);
-        const keyPhrase = argText.match(key);
-        const encryptedText = autokey(plainText[0], keyPhrase[0]);
-        return `<p class="hack-reveal">${ encryptedText }</p>`;
-    }
-    else if( decryptid.test( argText)){
-        const plainText = argText.match(msg);
-        const keyPhrase = argText.match(key);
-        const decryptedText = autodekey(plainText[0], keyPhrase[0]);
-        return `<p class="hack-reveal">${ decryptedText }</p>`;
-    }
+    var msg;
+    const argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
+    const crypt = argText.match(/(de)|(en)crypt/gmi);
+    const plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
+    const keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
+    const usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
+    switch(crypt){
+        case crypt.test(/^d/i) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
+        break;
+
+        case crypt.test(/^e/i) : msg =  `<p class="hack-reveal">${ autokey(plainText,keyText) }</p>`;
+        break;
+        
+        default: msg = usage;
+    };
+
+    return msg
 };
 function emod(n, m){
     r = n % m;
