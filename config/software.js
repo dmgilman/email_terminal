@@ -23,8 +23,11 @@ function cryptid( args){
     var msg;
     const argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
     const crypt = argText.match(/(de)|(en)crypt/gmi);
+    console.log(crypt)
     const plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
+    console.log(plainText)
     const keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
+    console.log(keyText)
     const usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
     switch(crypt){
         case /^d/i.test(crypt) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
@@ -33,7 +36,7 @@ function cryptid( args){
         case /^e/i.test(crypt) : msg =  `<p class="hack-reveal">${ autokey(plainText,keyText) }</p>`;
         break;
         
-        default: msg = usage;
+        case crypt === null: msg = usage;
     };
 
     return msg
