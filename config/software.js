@@ -27,10 +27,10 @@ function cryptid( args){
     const keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
     const usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
     switch(crypt){
-        case crypt.test(/^d/i) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
+        case /^d/i.test(crypt) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
         break;
 
-        case crypt.test(/^e/i) : msg =  `<p class="hack-reveal">${ autokey(plainText,keyText) }</p>`;
+        case /^e/i.test(crypt) : msg =  `<p class="hack-reveal">${ autokey(plainText,keyText) }</p>`;
         break;
         
         default: msg = usage;
