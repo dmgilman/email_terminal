@@ -20,8 +20,8 @@ function decrypt( args ) { // The same function can be used to encode text
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
-    var msg;
-    const argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
+    let msg;
+    let argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
     switch(argText){
         case typeof argText === 'string': console.log("I\'m a strong");
         break;
@@ -31,13 +31,13 @@ function cryptid( args){
 
         default: console.log(argText);
     };
-    const crypt = argText.match(/(de)|(en)crypt/gmi);
+    let crypt = argText.match(/(de)|(en)crypt/gmi);
     console.log(crypt)
-    const plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
+    let plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
     console.log(plainText)
-    const keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
+    let keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
     console.log(keyText)
-    const usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
+    let usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
     switch(crypt){
         case /^d/i.test(crypt) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
         break;
@@ -51,7 +51,7 @@ function cryptid( args){
     return msg
 };
 function emod(n, m){
-    r = n % m;
+    let r = n % m;
     if( r<0){
         r = (m<0) ? r - m : r + m;
     };
