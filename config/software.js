@@ -22,6 +22,12 @@ function decrypt( args ) { // The same function can be used to encode text
 function cryptid( args){
     var msg;
     const argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
+    switch(argText){
+        case typeof argText === 'string': console.log("I\'m a strong");
+        break;
+
+        case argText.constructor === Array: console.log("I\'m still an array!")
+    };
     const crypt = argText.match(/(de)|(en)crypt/gmi);
     console.log(crypt)
     const plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
