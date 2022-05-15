@@ -26,7 +26,10 @@ function cryptid( args){
         case typeof argText === 'string': console.log("I\'m a strong");
         break;
 
-        case argText.constructor === Array: console.log("I\'m still an array!")
+        case argText.constructor === Array: console.log("I\'m still an array!");
+        break;
+
+        default: console.log(argText);
     };
     const crypt = argText.match(/(de)|(en)crypt/gmi);
     console.log(crypt)
