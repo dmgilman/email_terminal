@@ -35,6 +35,7 @@
         ]
     },
     "cryptid": {
+        "protection": ["admin","overture"]
     },
     "oracle": {
         

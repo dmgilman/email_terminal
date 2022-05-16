@@ -20,35 +20,24 @@ function decrypt( args ) { // The same function can be used to encode text
 //     return s.replace( /[a-zA-Z]/g, ( c ) => String.fromCharCode( ( c <= "Z" ? 90 : 122 ) >= ( c = c.charCodeAt( 0 ) + 13 ) ? c : c - 26 ) );
 // }
 function cryptid( args){
-    let msg;
+    let message;
     let argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
-    switch(argText){
-        case typeof argText === 'string': console.log("I\'m a strong");
+    let crypt = argText.match(/(de|en)crypt/gmi)[0];
+    let plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi)[0];
+    let keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi)[0];
+    let usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>";
+    console.log("Just a heads up, you'll likely need to escape \\'s since...well...you know...")
+    if (crypt.length == 0){return usage}
+    switch(/^d/i.test(crypt)){
+        case true : message = autodekey(plainText,keyText);
         break;
 
-        case argText.constructor === Array: console.log("I\'m still an array!");
-        break;
-
-        default: console.log(argText);
-    };
-    let crypt = argText.match(/(de)|(en)crypt/gmi);
-    console.log(crypt)
-    let plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi);
-    console.log(plainText)
-    let keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi);
-    console.log(keyText)
-    let usage = "<p>Usage: (ENCRYPT)|(DECRYPT) msg: (MESSAGE TEXT) key: (KEY TEXT)</p>"
-    switch(crypt){
-        case /^d/i.test(crypt) : msg =  `<p class="hack-reveal">${ autodekey(plainText,keyText) }</p>`;
-        break;
-
-        case /^e/i.test(crypt) : msg =  `<p class="hack-reveal">${ autokey(plainText,keyText) }</p>`;
+        case false : message = autokey(plainText,keyText);
         break;
         
-        case crypt === null: msg = usage;
-    };
+        };
 
-    return msg
+    return `<p class="hack-reveal">${ message }</p>`
 };
 function emod(n, m){
     let r = n % m;
@@ -60,9 +49,9 @@ function emod(n, m){
 function autokey(msg,key){
     let keystream = key+msg, out='';
     for(let i = 0; i < msg.length; i++){
-        p = msg.charCodeAt(i);
-        k = keystream.charCodeAt(i);
-        c = (p + k - 64) % 95 + 32;
+        let p = msg.charCodeAt(i);
+        let k = keystream.charCodeAt(i);
+        let c = (p + k - 64) % 95 + 32;
         out += String.fromCharCode(c);
     }
     return out;
@@ -70,15 +59,15 @@ function autokey(msg,key){
 function autodekey(msg,key){
     let keystream = key,out='';
     for(let i = 0; i < msg.length; i++){
-        c = msg.charCodeAt(i);
-        k = keystream.charCodeAt(i);
-        p = emod(c-k,95);
-        q = p + 32;
-        out += String.fromCharCode(q);
+        let c = msg.charCodeAt(i);
+        let k = keystream.charCodeAt(i);
+        let p = emod(c-k,95);
+        p += 32;
+        out += String.fromCharCode(p);
         keystream += String.fromCharCode(p);
     }
     return out;
 };
 function oracle( args){
-    return args.join(' ')
+    return args.join(' and ')
 }
