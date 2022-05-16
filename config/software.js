@@ -21,7 +21,7 @@ function decrypt( args ) { // The same function can be used to encode text
 // }
 function cryptid( args){
     let message;
-    let argText = args.join(' ').replace(/(?=['"<>/\\])/gm,'\\');
+    let argText = args.join(' ').replace(/(?=[])/gm,'\\');
     let crypt = argText.match(/(de|en)crypt/gmi)[0];
     let plainText = argText.match(/(?<=msg: ).*(?= key: )|(?<=msg: ).*(?! key: )/gmi)[0];
     let keyText = argText.match(/(?<=key: ).*(?= msg: )|(?<=key: ).*(?! msg: )/gmi)[0];
