@@ -35,7 +35,8 @@
         ]
     },
     "cryptid": {
-        "protection": ["admin","overture"]
+        "protection": ["admin","overture"],
+        "help": "<p>Encodes or Decodes ASCII text. <br>Usage: >cryptid (encode)/(decode) key: (keyphrase) msg: (message)</p>"
     },
     "oracle": {
         
